@@ -61,7 +61,7 @@ namespace Falcon.Entity.Prospect
         public string ParentRelationship { get; set; }
         public string ParentOccupation { get; set; }
 
-        public string AdmissionStatus { get; set; }
+        public int AdmissionStatusId { get; set; }
         public string Notes { get; set; }
     }
 
@@ -75,7 +75,7 @@ namespace Falcon.Entity.Prospect
     public class ViewProspectStudentModel : AddProspectStudentModel
     {
         public int Id { get; set; }
-
+        public string AdmissionStatus { get; set; }
         public string ClassName { get; set; }
         public string Gender { get; set; }
         public string Religion { get; set; }

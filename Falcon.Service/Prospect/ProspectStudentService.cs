@@ -42,22 +42,22 @@ namespace Falcon.Service.Prospect
         {
             //Generate Datatable which match the UserDefinedTableType "UT_ProspectStudent"
 
-            DataTable prospectDataTable = new DataTable();
+            DataTable prospectDataTable = new DataTable("Prospect");
             prospectDataTable.Columns.Add(new DataColumn { ColumnName = "UT_ApplicationNo", DataType = typeof(string), Caption = "ApplicationNo", });
             prospectDataTable.Columns.Add(new DataColumn { ColumnName = "UT_FirstName", DataType = typeof(string), Caption = "FirstName", });
             prospectDataTable.Columns.Add(new DataColumn { ColumnName = "UT_MiddleName", DataType = typeof(string), Caption = "MiddleName", });
             prospectDataTable.Columns.Add(new DataColumn { ColumnName = "UT_LastName", DataType = typeof(string), Caption = "LastName", });
-            prospectDataTable.Columns.Add(new DataColumn { ColumnName = "UT_Class", DataType = typeof(int), Caption = "ClassId", });
-            prospectDataTable.Columns.Add(new DataColumn { ColumnName = "UT_Sex", DataType = typeof(int), Caption = "GenderId", });
+            prospectDataTable.Columns.Add(new DataColumn { ColumnName = "UT_Class", DataType = typeof(decimal), Caption = "ClassId", });
+            prospectDataTable.Columns.Add(new DataColumn { ColumnName = "UT_Sex", DataType = typeof(decimal), Caption = "GenderId", });
             prospectDataTable.Columns.Add(new DataColumn { ColumnName = "UT_DOB", DataType = typeof(DateTime), Caption = "DOB", });
             prospectDataTable.Columns.Add(new DataColumn { ColumnName = "UT_Phone", DataType = typeof(string), Caption = "PhoneNumber", });
             prospectDataTable.Columns.Add(new DataColumn { ColumnName = "UT_EmailId", DataType = typeof(string), Caption = "EmailId", });
             prospectDataTable.Columns.Add(new DataColumn { ColumnName = "UT_CurrentAddress", DataType = typeof(string), Caption = "CurrentAddress", });
             prospectDataTable.Columns.Add(new DataColumn { ColumnName = "UT_PermanentAddress", DataType = typeof(string), Caption = "PermanentAddress", });
-            prospectDataTable.Columns.Add(new DataColumn { ColumnName = "UT_Religion", DataType = typeof(int), Caption = "ReligionId", });
-            prospectDataTable.Columns.Add(new DataColumn { ColumnName = "UT_Caste", DataType = typeof(int), Caption = "CasteId", });
-            prospectDataTable.Columns.Add(new DataColumn { ColumnName = "UT_Category", DataType = typeof(int), Caption = "CategoryId", });
-            prospectDataTable.Columns.Add(new DataColumn { ColumnName = "UT_BloodGrp", DataType = typeof(int), Caption = "BloodGrpId", });
+            prospectDataTable.Columns.Add(new DataColumn { ColumnName = "UT_Religion", DataType = typeof(decimal), Caption = "ReligionId", });
+            prospectDataTable.Columns.Add(new DataColumn { ColumnName = "UT_Caste", DataType = typeof(decimal), Caption = "CasteId", });
+            prospectDataTable.Columns.Add(new DataColumn { ColumnName = "UT_Category", DataType = typeof(decimal), Caption = "CategoryId", });
+            prospectDataTable.Columns.Add(new DataColumn { ColumnName = "UT_BloodGrp", DataType = typeof(decimal), Caption = "BloodGrpId", });
             prospectDataTable.Columns.Add(new DataColumn { ColumnName = "UT_AadharId", DataType = typeof(string), Caption = "AadharId", });
             prospectDataTable.Columns.Add(new DataColumn { ColumnName = "UT_ParentName", DataType = typeof(string), Caption = "ParentName", });
             prospectDataTable.Columns.Add(new DataColumn { ColumnName = "UT_ParentPhone", DataType = typeof(string), Caption = "ParentName", });
@@ -65,8 +65,8 @@ namespace Falcon.Service.Prospect
             prospectDataTable.Columns.Add(new DataColumn { ColumnName = "UT_ParentRelationship", DataType = typeof(string), Caption = "ParentRelationship", });
             prospectDataTable.Columns.Add(new DataColumn { ColumnName = "UT_ParentOccupation", DataType = typeof(string), Caption = "ParentOccupation", });
             prospectDataTable.Columns.Add(new DataColumn { ColumnName = "UT_ApplicationDate", DataType = typeof(DateTime), Caption = "ApplicationDate", });
-            prospectDataTable.Columns.Add(new DataColumn { ColumnName = "UT_AdmissionStatus", DataType = typeof(DateTime), Caption = "AdmissionStatus", });
-            prospectDataTable.Columns.Add(new DataColumn { ColumnName = "UT_Notes", DataType = typeof(DateTime), Caption = "Notes", });
+            prospectDataTable.Columns.Add(new DataColumn { ColumnName = "UT_AdmissionStatus", DataType = typeof(decimal), Caption = "AdmissionStatus", });
+            prospectDataTable.Columns.Add(new DataColumn { ColumnName = "UT_Notes", DataType = typeof(string), Caption = "Notes", });
 
             DataRow row = prospectDataTable.NewRow();
             row["UT_ApplicationNo"] = NumberGenerator.RandomDigits(8);
@@ -91,7 +91,7 @@ namespace Falcon.Service.Prospect
             row["UT_ParentRelationship"] = prospectStudentModel.ParentRelationship;
             row["UT_ParentOccupation"] = prospectStudentModel.ParentOccupation;
             row["UT_ApplicationDate"] = prospectStudentModel.ApplicationDate;
-            row["UT_AdmissionStatus"] = prospectStudentModel.AdmissionStatus;
+            row["UT_AdmissionStatus"] = prospectStudentModel.AdmissionStatusId;
             row["UT_Notes"] = prospectStudentModel.Notes;
 
             prospectDataTable.Rows.Add(row);

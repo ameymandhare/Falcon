@@ -28,7 +28,7 @@ namespace Falcon.DataAceess
                 CacheKeyConstants.GenderMaster
             };
 
-            return dataAccess.GetDataSet(StoredProcedureConstants.SP_GetMasterData, CommandType.StoredProcedure, tableNames);
+            return dataAccess.GetDataSet(StoredProcedureConstants.GetMasterData, CommandType.StoredProcedure, tableNames);
         }
     }
 }

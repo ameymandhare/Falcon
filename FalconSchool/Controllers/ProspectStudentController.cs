@@ -4,8 +4,10 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using Constants;
+using Falcon.Entity.Prospect;
 using Falcon.Service.Prospect;
 using FalconSchool.Caching;
+using Utility;
 
 namespace FalconSchool.Controllers
 {
@@ -32,7 +34,7 @@ namespace FalconSchool.Controllers
         {
             var model = prospectService.GetProspectStudentDetailsById(id);
 
-            return View("Details",model);
+            return View("Details", model);
         }
 
         // GET: ProspectStudent/Create
@@ -48,6 +50,8 @@ namespace FalconSchool.Controllers
             ViewBag.SectionMaster = MastDataCache.GetCachedDataByKey(CacheKeyConstants.SectionMaster);
             ViewBag.GenderMaster = MastDataCache.GetCachedDataByKey(CacheKeyConstants.GenderMaster);
 
+            ViewBag.FormAction = "Add";
+
             return View();
         }
 
@@ -58,10 +62,39 @@ namespace FalconSchool.Controllers
             try
             {
                 // TODO: Add insert logic here
+                var prospectStudent = new AddProspectStudentModel
+                {
+                    AadharId = collection["AadharId"],
+                    AdmissionStatusId = Convert.ToInt32(collection["AdmissionStatus"]),
+                    ApplicationDate = DateTime.Now.Date,
+                    ApplicationNumber = string.Empty,
+                    FirstName = collection["FirstName"],
+                    MiddleName = collection["MiddleName"],
+                    LastName = collection["LastName"],
+                    BloodGrpId = Convert.ToInt32(collection["BloodGroup"]),
+                    CasteId = Convert.ToInt32(collection["Caste"]),
+                    CategoryId = Convert.ToInt32(collection["Category"]),
+                    ClassId = Convert.ToInt32(collection["ClassList"]),
+                    ReligionId = Convert.ToInt32(collection["Religion"]),
+                    GenderId = Convert.ToInt32(collection["Gender"]),
+                    DoB = Convert.ToDateTime(collection["DoB"]),
+                    CurrentAddress = collection["CurrentAddress"],
+                    PeremenantAddress = collection["PeremenantAddress"],
+                    Email = collection["Email"],
+                    Phone = collection["Phone"],
+                    ParentPhone = collection["ParentPhone"],
+                    ParentName = collection["ParentName"],
+                    ParentEmailId = collection["ParentEmailId"],
+                    ParentOccupation = collection["ParentOccupation"],
+                    ParentRelationship = collection["ParentRelationship"],
+                    Notes = collection["Notes"],
+                };
 
-                return RedirectToAction("Index");
+                var isSuccess = prospectService.AddProspectStudent(prospectStudent);
+
+                return RedirectToAction("List");
             }
-            catch
+            catch (Exception ex)
             {
                 return View();
             }
@@ -92,23 +125,34 @@ namespace FalconSchool.Controllers
         // GET: ProspectStudent/Delete/5
         public ActionResult Delete(int id)
         {
-            return View();
-        }
-
-        // POST: ProspectStudent/Delete/5
-        [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
-        {
             try
             {
                 // TODO: Add delete logic here
+                prospectService.DeleteProspectStudent(id);
 
-                return RedirectToAction("Index");
+                return RedirectToAction("List");
             }
             catch
             {
                 return View();
             }
         }
+
+        // POST: ProspectStudent/Delete/5
+        //[HttpPost]
+        //public ActionResult Delete(int id)
+        //{
+        //    try
+        //    {
+        //        // TODO: Add delete logic here
+        //        prospectService.DeleteProspectStudent(id);
+
+        //        return RedirectToAction("List");
+        //    }
+        //    catch
+        //    {
+        //        return View();
+        //    }
+        //}
     }
 }

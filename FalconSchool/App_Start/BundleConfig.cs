@@ -9,7 +9,8 @@ namespace FalconSchool
         public static void RegisterBundles(BundleCollection bundles)
         {
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
-                        "~/Scripts/jquery-{version}.js", "~/Scripts/jquery-ui-1.12.1.min.js"));
+                        "~/Scripts/jquery-{version}.js", 
+                        "~/Scripts/jquery-ui-1.12.1.min.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
                         "~/Scripts/jquery.validate*"));
@@ -20,12 +21,16 @@ namespace FalconSchool
                         "~/Scripts/modernizr-*"));
 
             bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
-                      "~/Scripts/bootstrap.js"));
+                      "~/Scripts/bootstrap.js",
+                      "~/Scripts/moment.js"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
                       "~/Content/site.css",
-                      "~/Content/themes/base/jquery-ui.min.css"));
+                      "~/Content/themes/base/jquery-ui.min.css",
+                      "~/Content/bootstrap-datetimepicker-build.less",
+                      "~/Content/_bootstrap-datetimepicker.less",
+                      "~/Content/bootstrap/variables.less"));
         }
     }
 }
