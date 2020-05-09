@@ -64,8 +64,8 @@
 
                     @*@Html.EditorFor(model => model.DoB, new { htmlAttributes = new { @class = "form-control" } })*@
 
-                    @Html.EditorFor(model => model.DoB, new { htmlAttributes = new { @class = "form-control" } })
-
+                    @Html.EditorFor(model => model.DoB, new { htmlAttributes = new { @class = "form-control", autocomplete = "off" } })
+                    <span class="ui-icon ui-icon-calendar"></span>
                     @Html.ValidationMessageFor(model => model.DoB, "", new { @class = "text-danger" })
                 </div>
                 @*@Html.EditorFor(model => model.DoB, new { htmlAttributes = new { @class = "form-control" } })*@
@@ -211,19 +211,9 @@
     }
 
     <div>
-        @Html.ActionLink("Back to List", "Index")
+        @Html.ActionLink("Back to List", "List")
     </div>
 </body>
-@section Scripts {
-    <script type="text/javascript">
-        $(document).ready(function () {
-            $("#DoB").datepicker({
-                changeMonth: true,
-                changeYear: true,
-                minDate: '-15y',
-                yearRange: '1995:+nn',
-                maxDate: '-3y',
-            });
-        });
-    </script>
+@section Scripts{
+    <script type="text/javascript" src="~/Content/Scripts/ProspectStudent/CreateProspect.js"></script>
 }
