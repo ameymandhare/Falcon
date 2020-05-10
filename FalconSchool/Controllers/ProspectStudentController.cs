@@ -65,7 +65,7 @@ namespace FalconSchool.Controllers
                 var prospectStudent = new AddProspectStudentModel
                 {
                     AadharId = collection["AadharId"],
-                    AdmissionStatusId = Convert.ToInt32(collection["AdmissionStatus"]),
+                    AdmissionStatusId = 1,
                     ApplicationDate = DateTime.Now.Date,
                     ApplicationNumber = string.Empty,
                     FirstName = collection["FirstName"],

@@ -44,7 +44,7 @@ namespace Falcon.DataAceess.ProspectRepository
                     prospectStudents.Add(new ProspectStudentModel
                     {
                         Id = Int32.Parse(row["myId"].ToString()),
-                        Name = string.Concat(row["FirstName"].ToString(), row["MiddleName"].ToString(), row["LastName"].ToString()),
+                        Name = string.Concat(row["FirstName"].ToString(), " ",row["MiddleName"].ToString(), " ", row["LastName"].ToString()),
                         ApplicationNumber = row["ApplicationNo"].ToString(),
                         ApplicationDate = DateTime.Parse(row["ApplicationDate"].ToString())
                     });
@@ -98,12 +98,12 @@ namespace Falcon.DataAceess.ProspectRepository
                 prospectStudent.BloodGrp = result.Rows[0]["BloodGroup"].ToString();
                 prospectStudent.AdmissionStatus = result.Rows[0]["admissionstatus"].ToString();
                 prospectStudent.FullName = string.Concat(result.Rows[0]["FirstName"].ToString(), " ", result.Rows[0]["MiddleName"].ToString(), " ", result.Rows[0]["LastName"].ToString());
-                prospectStudent.Notes = "This is sample note";
-                prospectStudent.ParentEmailId = "ameymandhare@gmail.com";
-                prospectStudent.ParentName = "Demo Parent";
-                prospectStudent.ParentOccupation = "Mera baap chor hai.";
-                prospectStudent.ParentPhone = "9766355017";
-                prospectStudent.ParentRelationship = "Guardian";
+                prospectStudent.Notes = result.Rows[0]["Notes"].ToString();
+                prospectStudent.ParentEmailId = result.Rows[0]["ParentEmailId"].ToString();
+                prospectStudent.ParentName = result.Rows[0]["ParentName"].ToString();
+                prospectStudent.ParentOccupation = result.Rows[0]["ParentOccupation"].ToString();
+                prospectStudent.ParentPhone = result.Rows[0]["ParentPhone"].ToString();
+                prospectStudent.ParentRelationship = result.Rows[0]["ParentRelationship"].ToString();
             }
 
             return prospectStudent;
