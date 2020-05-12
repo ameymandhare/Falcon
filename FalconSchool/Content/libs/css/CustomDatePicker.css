@@ -1,0 +1,19 @@
+﻿.bootstrap-datetimepicker-widget.dropdown-menu {
+    width: 280px !important;
+    border: 1px solid #71748d !important;
+    border-radius: 5px !important;
+}
+
+.bootstrap-datetimepicker-widget table td.day {
+    height: 10px !important;
+    line-height: 10px !important;
+    width: 10px !important;
+}
+
+/*.dow {
+    display:none !important;
+}*/
+
+td.day {
+    border: none;
+}

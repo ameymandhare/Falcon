@@ -181,6 +181,7 @@
     <Content Include="Content\images\product-pic.jpg" />
     <Content Include="Content\images\slack.png" />
     <Content Include="Content\images\switch.png" />
+    <Content Include="Content\libs\css\CustomDatePicker.css" />
     <Content Include="Content\libs\css\style.css" />
     <Content Include="Content\libs\js\dashboard-ecommerce.js" />
     <Content Include="Content\libs\js\dashboard-finance.js" />

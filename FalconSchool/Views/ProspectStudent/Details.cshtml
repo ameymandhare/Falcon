@@ -177,10 +177,11 @@
             </div>
         </div>
     </form>
-    @*<p>
-        @Html.ActionLink("Edit", "Edit", new { id = model.Id })
-        @Html.ActionLink("Back to List", "List")
-    </p>*@
+    <p>
+        @Html.ActionLink("Edit", "Edit", null, new { id = Model.Id }, new { @class = "btn btn-primary" })
+        @Html.ActionLink("Delete", "Delete", null, new { id = Model.Id }, new { @class = "btn btn-primary" })
+        @Html.ActionLink("Back", "List", null, new { @class = "btn btn-primary" })
+    </p>
 </div>
 
 <!-- ============================================================== -->
