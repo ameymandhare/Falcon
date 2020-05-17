@@ -19,8 +19,6 @@ namespace Falcon.DataAceess.ProspectRepository
             dataAccess = repository.FalconDataAccess;
         }
 
-       
-
         public List<ProspectStudentModel> GetAllProspectStudent()
         {
             string tableNames = "AllProspectStudents";

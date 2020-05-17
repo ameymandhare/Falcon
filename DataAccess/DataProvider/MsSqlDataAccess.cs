@@ -7,13 +7,20 @@ using System.Collections.Generic;
 namespace DataAccess.DataProvider
 {
 
-    public class MsSqlDataAccess : IDataAccess
+    public class MsSqlDataAccess : IDataAccess, IDisposable
     {
         #region Declaration(s)
         private string connectionString = string.Empty;
         private const int commandTimeout = 0;
         private SqlConnection connection;
         private SqlTransaction transaction;
+
+
+        // Pointer to an external unmanaged resource.
+        private IntPtr handle;
+        // Other managed resource this class uses.
+        // Track whether Dispose has been called.
+        private bool disposed = false;
         #endregion
 
         #region Properties
@@ -29,6 +36,20 @@ namespace DataAccess.DataProvider
         }
         #endregion
 
+        #region Destructor
+        // Use C# destructor syntax for finalization code.
+        // This destructor will run only if the Dispose method
+        // does not get called.
+        // It gives your base class the opportunity to finalize.
+        // Do not provide destructors in types derived from this class.
+        ~MsSqlDataAccess()
+        {
+            // Do not re-create Dispose clean-up code here.
+            // Calling Dispose(false) is optimal in terms of
+            // readability and maintainability.
+            Dispose(false);
+        }
+        #endregion
         #region Method(s)
         #region GetScalar
         public object GetScalar(string commandText)
@@ -673,8 +694,6 @@ namespace DataAccess.DataProvider
 
                 }
 
-
-
                 if (TempDataSet != null && TempDataSet.Tables.Count > 0)
                 {
                     int counter = 0;
@@ -893,8 +912,47 @@ namespace DataAccess.DataProvider
         {
             BatchSize = size;
         }
+
         #endregion
 
+        #endregion
+
+        #region IDisposable
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            // Check to see if Dispose has already been called.
+            if (!this.disposed)
+            {
+                // If disposing equals true, dispose all managed
+                // and unmanaged resources.
+                if (disposing)
+                {
+                    // Dispose managed resources.
+                    this.Dispose();
+                }
+
+                // Call the appropriate methods to clean up
+                // unmanaged resources here.
+                // If disposing is false,
+                // only the following code is executed.
+                CloseHandle(handle);
+                handle = IntPtr.Zero;
+
+                // Note disposing has been done.
+                disposed = true;
+            }
+        }
+
+        // Use interop to call the method necessary
+        // to clean up the unmanaged resource.
+        [System.Runtime.InteropServices.DllImport("Kernel32")]
+        private extern static Boolean CloseHandle(IntPtr handle);
         #endregion
     }
 }

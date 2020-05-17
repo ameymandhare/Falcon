@@ -10,5 +10,6 @@ namespace Falcon.DataAceess
     public interface ICommonRepository
     {
         DataSet GetMasterData();
+        DataTable GetPostalCodeBySearchKey(string searchKeyword);
     }
 }

@@ -1,0 +1,118 @@
+﻿@using System.Data
+@using System.Linq
+@model Falcon.Entity.Master.ClassConfiguration
+@{
+    ViewBag.Title = "DivisionConfiguration";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="container-fluid dashboard-content ">
+    <!-- ============================================================== -->
+    <!-- pageheader  -->
+    <!-- ============================================================== -->
+    <div class="row">
+        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+            <div class="page-header">
+                <h2 class="pageheader-title">Session-Class-Section Configuration</h2>
+
+                <div class="page-breadcrumb">
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href=@Url.Action("Home","Dashboard",null) class="breadcrumb-link">Dashboard</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">Session-Class-Section Configuration</li>
+                        </ol>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- ============================================================== -->
+    <!-- end pageheader  -->
+    <!-- ============================================================== -->
+    @using (Html.BeginForm("UpdateClassConfig", "Master", "HttpPost"))
+    {
+        @Html.AntiForgeryToken()
+        <!-- ============================================================== -->
+        <!-- vertical tabs  -->
+        <!-- ============================================================== -->
+        <div class="">
+            <div class="tab-vertical">
+                <ul class="nav nav-tabs" id="myTab3" role="tablist">
+                    @{
+                        int sessionULIndex = 0;
+                    }
+                    @foreach (var ses in Model.sessionList)
+                    {
+
+                        <li class="nav-item">
+                            <a class="@(sessionULIndex == 0 ? "nav-link active" : "nav-link")"
+                               id=@(ses.myId + "LI")
+                               data-toggle="tab"
+                               href="@("#" + ses.myId + "div")"
+                               role="tab"
+                               aria-controls="home"
+                               aria-selected="true">@Html.Raw(ses.Name)</a>
+                        </li>
+
+                        sessionULIndex++;
+                    }
+                </ul>
+                <div class="tab-content" id="myTabContent3">
+                    @{
+                        int sessionDivIndex = 0;
+                    }
+                    @foreach (var ses in Model.sessionList)
+                    {
+                        <div class="@(sessionDivIndex == 0 ? "tab-pane fade show active" : "tab-pane fade")"
+                             id="@(ses.myId + "div")"
+                             role="tabpanel"
+                             aria-labelledby=@(ses.myId + "LI")>
+                            <div class="row">
+                                @foreach (var cls in Model.classList)
+                                {
+                                    <div class="col-xl-3 col-lg-6 col-md-6 col-sm-12 col-12">
+                                        <div class="card">
+                                            <div class="card-body">
+                                                <h3 class="card-title border-bottom pb-2">@Html.Raw(cls.Name)</h3>
+                                                @foreach (var sec in Model.sectionList)
+                                                {
+
+                                                    <label class="custom-control custom-checkbox">
+                                                        <input type="checkbox"
+                                                               id="@(ses.myId.ToString() + cls.myId.ToString() + sec.myId.ToString())"
+                                                               class="custom-control-input"
+                                                               @(Model.ClassXrefList.Exists(x => x.ClassId == cls.myId && x.SessionId == ses.myId && x.SectionId == sec.myId) ? " checked" : "")
+                                                               disabled>
+                                                        <span class="custom-control-label">@sec.Name</span>
+                                                    </label>
+                                                }
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                        sessionDivIndex++;
+                    }
+                    <div class="form-row">
+                        <div class="form-group col-md-1">
+                            <div>
+                                <input type="submit" value="Create" class="btn btn-primary" />
+                            </div>
+                        </div>
+                        <div class="form-group col-md-1">
+                            <div>
+                                @Html.ActionLink("Back", "Home", "Dashboard", null, new { @class = "btn btn-primary" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+        <!-- ============================================================== -->
+        <!-- vertical tabs tabs  -->
+        <!-- ============================================================== -->
+
+    }
+</div>

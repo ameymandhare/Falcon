@@ -52,7 +52,7 @@ namespace FalconSchool.Controllers
 
             ViewBag.FormAction = "Add";
 
-            return View();
+            return View("AddEdit");
         }
 
         // POST: ProspectStudent/Create
@@ -103,7 +103,19 @@ namespace FalconSchool.Controllers
         // GET: ProspectStudent/Edit/5
         public ActionResult Edit(int id)
         {
-            return View();
+            ViewBag.BloodGrpMaster = MastDataCache.GetCachedDataByKey(CacheKeyConstants.BloodGrpMaster);
+            ViewBag.AdmStatusMaster = MastDataCache.GetCachedDataByKey(CacheKeyConstants.AdmStatusMaster);
+            ViewBag.ReligionMaster = MastDataCache.GetCachedDataByKey(CacheKeyConstants.ReligionMaster);
+            ViewBag.CasteMaster = MastDataCache.GetCachedDataByKey(CacheKeyConstants.CasteMaster);
+            ViewBag.CategoryMaster = MastDataCache.GetCachedDataByKey(CacheKeyConstants.CategoryMaster);
+            ViewBag.SessionMaster = MastDataCache.GetCachedDataByKey(CacheKeyConstants.SessionMaster);
+            ViewBag.ClassMaster = MastDataCache.GetCachedDataByKey(CacheKeyConstants.ClassMaster);
+            ViewBag.SectionMaster = MastDataCache.GetCachedDataByKey(CacheKeyConstants.SectionMaster);
+            ViewBag.GenderMaster = MastDataCache.GetCachedDataByKey(CacheKeyConstants.GenderMaster);
+
+            ViewBag.FormAction = "Edit";
+
+            return View("AddEdit");
         }
 
         // POST: ProspectStudent/Edit/5

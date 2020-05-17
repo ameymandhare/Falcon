@@ -30,5 +30,19 @@ namespace Falcon.DataAceess
 
             return dataAccess.GetDataSet(StoredProcedureConstants.GetMasterData, CommandType.StoredProcedure, tableNames);
         }
+
+        public DataTable GetPostalCodeBySearchKey(string searchKeyword)
+        {
+            AppConfig config = new AppConfig();
+
+            MsSqlDataAccess dataAccess = new MsSqlDataAccess(config.FalconConnectionString);
+
+            string tableNames = "PostalCodeMaster";
+
+            string commandText = @"SELECT myId, PinCode , Area , City , Tehsil , District , State , Country FROM PinCodeMaster WHERE PinCode = " + searchKeyword;
+
+            return dataAccess.GetDataTable(commandText, CommandType.Text, tableNames);
+
+        }
     }
 }

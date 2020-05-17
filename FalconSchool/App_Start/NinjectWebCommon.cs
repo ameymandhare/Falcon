@@ -17,6 +17,7 @@ namespace FalconSchool.App_Start
     using Falcon.DataAceess.ProspectRepository;
     using Falcon.Service.Common;
     using Falcon.DataAceess;
+    using Falcon.Service.MasterRepository;
 
     public static class NinjectWebCommon 
     {
@@ -74,10 +75,12 @@ namespace FalconSchool.App_Start
 
             #region Services
             kernel.Bind<IProspectStudentService>().To<ProspectStudentService>();
+            kernel.Bind<IMasterService>().To<MasterService>();
             #endregion
 
             #region Repository
             kernel.Bind<IProspectStudentRepository>().To<ProspectStudentRepositiry>();
+            kernel.Bind<IMasterRepository>().To<MasterRepository>();
             #endregion
         }
     }

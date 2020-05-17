@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Constants;
+using Falcon.Entity.Address;
 
 namespace Falcon.Service.Common
 {
@@ -52,6 +53,8 @@ namespace Falcon.Service.Common
             return dropdownKeyValuePairs;
         }
 
+
+
         #region private Function
         private List<DropdownData> FilterOutDropdownDataByKey(string key, DataSet ds)
         {
@@ -81,6 +84,27 @@ namespace Falcon.Service.Common
 
 
             return dropDowanData;
+        }
+
+        public List<PostalCodeMaster> GetPostalCodeBySearchKey(string searchKeyword)
+        {
+            var pinCodeDt = repository.GetPostalCodeBySearchKey(searchKeyword);
+
+            var pinCodeList = new List<PostalCodeMaster>();
+
+            pinCodeList.AddRange(pinCodeDt.AsEnumerable().Select(row => new PostalCodeMaster()
+            {
+                Id = Convert.ToInt32(row.Field<decimal>("myId")),
+                Area = row.Field<string>("Area"),
+                City = row.Field<string>("City"),
+                Country = row.Field<string>("Country"),
+                District = row.Field<string>("District"),
+                Pin = row.Field<string>("PinCode"),
+                State = row.Field<string>("State"),
+                Tehsil = row.Field<string>("Tehsil")
+            }));
+
+            return pinCodeList;
         }
         #endregion
     }

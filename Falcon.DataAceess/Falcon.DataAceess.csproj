@@ -43,6 +43,8 @@
   <ItemGroup>
     <Compile Include="CommonRepository\CommonRepository.cs" />
     <Compile Include="CommonRepository\ICommonRepository.cs" />
+    <Compile Include="MasterRepository\IMasterRepository.cs" />
+    <Compile Include="MasterRepository\MasterRepository.cs" />
     <Compile Include="StoredProcedureConstants.cs" />
     <Compile Include="DataRepository\IRepository.cs" />
     <Compile Include="DataRepository\Repository.cs" />

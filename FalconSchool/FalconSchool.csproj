@@ -140,12 +140,13 @@
     <Compile Include="App_Start\NinjectWebCommon.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Caching\MastDataCache.cs" />
+    <Compile Include="Controllers\CommonController.cs" />
     <Compile Include="Controllers\DashboardController.cs" />
+    <Compile Include="Controllers\MasterController.cs" />
     <Compile Include="Controllers\ProspectStudentController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\StudentModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -181,6 +182,7 @@
     <Content Include="Content\images\product-pic.jpg" />
     <Content Include="Content\images\slack.png" />
     <Content Include="Content\images\switch.png" />
+    <Content Include="Content\images\ui-anim_basic_16x16.gif" />
     <Content Include="Content\libs\css\CustomDatePicker.css" />
     <Content Include="Content\libs\css\style.css" />
     <Content Include="Content\libs\js\dashboard-ecommerce.js" />
@@ -192,6 +194,7 @@
     <Content Include="Content\libs\js\jvectormap.custom.js" />
     <Content Include="Content\libs\js\main-js.js" />
     <Content Include="Content\libs\js\create-prospect.js" />
+    <Content Include="Content\libs\js\postal-code.js" />
     <Content Include="Content\vendor\bootstrap-colorpicker\%40claviska\jquery-minicolors\jquery.minicolors.css" />
     <Content Include="Content\vendor\bootstrap-colorpicker\%40claviska\jquery-minicolors\jquery.minicolors.min.js" />
     <Content Include="Content\vendor\bootstrap-colorpicker\%40claviska\jquery-minicolors\jquery.minicolors.png" />
@@ -524,7 +527,10 @@
     <Content Include="Content\vendor\gauge\gauge.min.js" />
     <Content Include="Content\vendor\inputmask\css\inputmask.css" />
     <Content Include="Content\vendor\inputmask\js\jquery.inputmask.bundle.js" />
+    <Content Include="Content\vendor\jquery\jquery-1.12.4.js" />
     <Content Include="Content\vendor\jquery\jquery-3.3.1.min.js" />
+    <Content Include="Content\vendor\jquery\jquery-ui-1.12.1.js" />
+    <Content Include="Content\vendor\jquery\jquery-ui.css" />
     <Content Include="Content\vendor\jvectormap\jquery-jvectormap-2.0.2.css" />
     <Content Include="Content\vendor\jvectormap\jquery-jvectormap-2.0.2.min.js" />
     <Content Include="Content\vendor\jvectormap\jquery-jvectormap-au-mill.js" />
@@ -605,18 +611,21 @@
     <Content Include="Views\Web.config" />
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
-    <Content Include="Views\Shared\Old_Layout.cshtml" />
     <Content Include="Views\ProspectStudent\List.cshtml" />
     <Content Include="Views\ProspectStudent\Details.cshtml" />
-    <Content Include="Views\ProspectStudent\Create.cshtml" />
-    <Content Include="Views\Shared\Admin_Layout.cshtml" />
+    <Content Include="Views\ProspectStudent\AddEdit.cshtml" />
+    <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Content\vendor\jquery\jquery-3.5.1.slim.min.map" />
     <Content Include="Content\vendor\jquery\jquery-3.5.1.min.map" />
     <Content Include="Views\Dashboard\Home.cshtml" />
     <Content Include="Views\Dashboard\Blank.cshtml" />
+    <Content Include="Views\Shared\_Address.cshtml" />
+    <Content Include="Views\Master\DivisionConfiguration.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Models\" />
+    <Folder Include="Views\Common\" />
     <Folder Include="Views\Student\" />
   </ItemGroup>
   <ItemGroup>

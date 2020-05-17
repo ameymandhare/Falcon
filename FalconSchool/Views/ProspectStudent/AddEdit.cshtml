@@ -2,12 +2,19 @@
 
 @{
     ViewBag.Title = "Add";
-    Layout = "~/Views/Shared/Admin_Layout.cshtml";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 
 }
 @section Styles{
     <link href="~/Content/libs/css/CustomDatePicker.css" rel="stylesheet" />
     <link rel="stylesheet" href="~/Content/vendor/datepicker/tempusdominus-bootstrap-4.css" />
+
+    <link href="~/Content/vendor/jquery/jquery-ui.css" rel="stylesheet" />
+    <style>
+        .ui-autocomplete-loading {
+            background: white url("../../Content/images/ui-anim_basic_16x16.gif") right center no-repeat;
+        }
+    </style>
 }
 <!-- ============================================================== -->
 <!-- wrapper  -->
@@ -122,20 +129,23 @@
             <!-- Row 2 end -->
             <!-- Row 3 begin : Current address and permanent address-->
             <div class="form-row">
-                <div class="form-group col-md-4">
-                    @Html.Label("Current Address")
-                    <div>
-                        @Html.TextAreaFor(model => model.CurrentAddress, 5, 1, htmlAttributes: new { style = "width: 100%; max-width: 100%;" })
-                        @Html.ValidationMessageFor(model => model.CurrentAddress, "", new { @class = "text-danger" })
+                @*<div class="form-group col-md-4">
+                        @Html.Label("Current Address")
+                        <div>
+                            @Html.TextAreaFor(model => model.CurrentAddress, 5, 1, htmlAttributes: new { style = "width: 100%; max-width: 100%;" })
+                            @Html.ValidationMessageFor(model => model.CurrentAddress, "", new { @class = "text-danger" })
+                        </div>
                     </div>
-                </div>
-                <div class="form-group col-md-4">
-                    @Html.Label("Permanent Address")
-                    <div>
-                        @Html.TextAreaFor(model => model.PeremenantAddress, 5, 1, htmlAttributes: new { style = "width: 100%; max-width: 100%;" })
-                        @Html.ValidationMessageFor(model => model.PeremenantAddress, "", new { @class = "text-danger" })
-                    </div>
-                </div>
+                    <div class="form-group col-md-4">
+                        @Html.Label("Permanent Address")
+                        <div>
+                            @Html.TextAreaFor(model => model.PeremenantAddress, 5, 1, htmlAttributes: new { style = "width: 100%; max-width: 100%;" })
+                            @Html.ValidationMessageFor(model => model.PeremenantAddress, "", new { @class = "text-danger" })
+                        </div>
+                    </div>*@
+                @{
+                    Html.RenderPartial("_Address");
+                }
             </div>
             <!-- Row 3 end -->
             <!-- Row 4 begin :  religion selection, caste selection, category selection and bloodgroup seelection control -->
@@ -246,6 +256,7 @@
         </div>
         <!-- Form structure end -->
     }
+
     <!-- ============================================================== -->
     <!-- Form End Create Prospect Student -->
     <!-- ============================================================== -->
@@ -260,4 +271,37 @@
     <script src="~/Content/vendor/datepicker/moment.js"></script>
     <script src="~/Content/vendor/datepicker/tempusdominus-bootstrap-4.js"></script>
     <script src="~/Content/vendor/datepicker/datepicker.js"></script>
+
+    <script src="~/Content/vendor/jquery/jquery-1.12.4.js"></script>
+    <script src="~/Content/vendor/jquery/jquery-ui-1.12.1.js"></script>
+    @*<script src="~/Content/libs/js/postal-code.js"></script>*@
+    <script>
+        $(document).ready(function () {
+            function log(message) {
+                $("<div>").text(message).prependTo("#log");
+                $("#log").scrollTop(0);
+            }
+
+            $("#birds").autocomplete({
+                source: function (request, response) {
+                    $.ajax({
+                        url: '@(Url.Action("SearchPostal", "Common"))',
+                        dataType: "text",
+                        data: {
+                            postalCode: $("#birds").val()
+                        },
+                        success: function (data) {
+
+                            console.log(data);
+                            response(data);
+                        }
+                    });
+                },
+                minLength: 6,
+                select: function (event, ui) {
+                    log("Selected: " + ui.item.value + " aka " + ui.item.id);
+                }
+            });
+        });
+    </script>
 }

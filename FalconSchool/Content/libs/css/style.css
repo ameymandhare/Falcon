@@ -7004,3 +7004,7 @@ Media Query
 .addrs-fieldset legend {
     padding: 2px;
 }
+
+.hidden-me {
+    display: none;
+}
