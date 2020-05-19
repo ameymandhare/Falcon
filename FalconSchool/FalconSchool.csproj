@@ -142,7 +142,7 @@
     <Compile Include="Caching\MastDataCache.cs" />
     <Compile Include="Controllers\CommonController.cs" />
     <Compile Include="Controllers\DashboardController.cs" />
-    <Compile Include="Controllers\MasterController.cs" />
+    <Compile Include="Controllers\Master\AcademicController.cs" />
     <Compile Include="Controllers\ProspectStudentController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -620,7 +620,7 @@
     <Content Include="Views\Dashboard\Home.cshtml" />
     <Content Include="Views\Dashboard\Blank.cshtml" />
     <Content Include="Views\Shared\_Address.cshtml" />
-    <Content Include="Views\Master\DivisionConfiguration.cshtml" />
+    <Content Include="Views\Master\ClassConfig.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -67,5 +67,34 @@ namespace Falcon.Service.MasterRepository
 
             return model;
         }
+
+        public bool UpdateClassConfig(string[] AllKeys)
+        {
+            DataTable classXrefDataTable = new DataTable("ClassXref");
+            classXrefDataTable.Columns.Add(new DataColumn { ColumnName = "UT_CheckedId", DataType = typeof(decimal) });
+            classXrefDataTable.Columns.Add(new DataColumn { ColumnName = "UT_ClassID", DataType = typeof(decimal) });
+            classXrefDataTable.Columns.Add(new DataColumn { ColumnName = "UT_SectionId", DataType = typeof(decimal) });
+            classXrefDataTable.Columns.Add(new DataColumn { ColumnName = "UT_SessionID", DataType = typeof(decimal) });
+
+            DataRow row;
+
+            foreach (var classX in AllKeys)
+            {
+                var classArray = classX.Split('-');
+
+                if (classArray[0] == "0")
+                {
+                    row = classXrefDataTable.NewRow();
+                    row["UT_CheckedId"] = Convert.ToDecimal(classArray[0]);
+                    row["UT_ClassID"] = Convert.ToDecimal(classArray[2]);
+                    row["UT_SectionId"] = Convert.ToDecimal(classArray[3]);
+                    row["UT_SessionID"] = Convert.ToDecimal(classArray[1]);
+
+                    classXrefDataTable.Rows.Add(row);
+                }
+            }
+
+            return repository.UpdateClassesMasterConfiguration(classXrefDataTable);
+        }
     }
 }

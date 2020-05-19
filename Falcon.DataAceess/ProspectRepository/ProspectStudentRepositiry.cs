@@ -123,12 +123,12 @@ namespace Falcon.DataAceess.ProspectRepository
 
                 dalParam.Add(new DalParameter()
                 {
-                    ParameterName = "@NewProspect",
+                    ParameterName = "@ClassXref",
                     ParameterValue = dataSet.Tables["Prospect"],
                     ParameterType = SqlDbType.Structured
                 });
 
-                dataAccess.ExecuteNonQuery(StoredProcedureConstants.AddNewProspect, CommandType.StoredProcedure, dalParam);
+                dataAccess.ExecuteNonQuery(StoredProcedureConstants.UpdateClassConfiguration, CommandType.StoredProcedure, dalParam);
                 var isSuccess = Convert.ToBoolean(dalParam.Where(x => x.ParameterName == "@IsSuccess").First().ParameterValue);
             }
             catch (Exception ex)

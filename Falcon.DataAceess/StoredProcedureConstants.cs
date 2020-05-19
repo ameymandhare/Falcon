@@ -16,8 +16,8 @@ namespace Falcon.DataAceess
 
         public static string DeleteProsepctStudent = "SP_DeleteProsepctStudent";
 
-        public static string GetClassConfiguration = "GetClassConfiguration";
+        public static string GetClassConfiguration = "SP_GetClassConfiguration";
 
-        public static string UpdateClassConfiguration = "UpdateClassConfiguration";
+        public static string UpdateClassConfiguration = "SP_UpdateClassXRef";
     }
 }

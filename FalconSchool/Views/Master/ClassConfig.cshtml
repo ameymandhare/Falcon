@@ -2,7 +2,7 @@
 @using System.Linq
 @model Falcon.Entity.Master.ClassConfiguration
 @{
-    ViewBag.Title = "DivisionConfiguration";
+    ViewBag.Title = "ClassConfig";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <div class="container-fluid dashboard-content ">
@@ -10,10 +10,9 @@
     <!-- pageheader  -->
     <!-- ============================================================== -->
     <div class="row">
-        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+        <div class="col-md-12">
             <div class="page-header">
                 <h2 class="pageheader-title">Session-Class-Section Configuration</h2>
-
                 <div class="page-breadcrumb">
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb">
@@ -28,15 +27,15 @@
     <!-- ============================================================== -->
     <!-- end pageheader  -->
     <!-- ============================================================== -->
-    @using (Html.BeginForm("UpdateClassConfig", "Master", "HttpPost"))
+    @using (Html.BeginForm("UpdateConfig", "Academic", "HttpPost"))
     {
         @Html.AntiForgeryToken()
         <!-- ============================================================== -->
         <!-- vertical tabs  -->
         <!-- ============================================================== -->
-        <div class="">
+        <div class="col-sm-12 mb-5">
             <div class="tab-vertical">
-                <ul class="nav nav-tabs" id="myTab3" role="tablist">
+                <ul class="nav nav-tabs col-xs-4" id="myTab3" role="tablist">
                     @{
                         int sessionULIndex = 0;
                     }
@@ -44,7 +43,7 @@
                     {
 
                         <li class="nav-item">
-                            <a class="@(sessionULIndex == 0 ? "nav-link active" : "nav-link")"
+                            <a class="@(sessionULIndex == 0 ? "nav-link h5 active" : "nav-link h5")"
                                id=@(ses.myId + "LI")
                                data-toggle="tab"
                                href="@("#" + ses.myId + "div")"
@@ -56,7 +55,7 @@
                         sessionULIndex++;
                     }
                 </ul>
-                <div class="tab-content" id="myTabContent3">
+                <div class="tab-content col-sm-10" id="myTabContent3">
                     @{
                         int sessionDivIndex = 0;
                     }
@@ -75,12 +74,16 @@
                                                 <h3 class="card-title border-bottom pb-2">@Html.Raw(cls.Name)</h3>
                                                 @foreach (var sec in Model.sectionList)
                                                 {
+                                                    var classXrefId = Model.ClassXrefList.Exists(x => x.ClassId == cls.myId && x.SessionId == ses.myId && x.SectionId == sec.myId) ?
+                                                                        Model.ClassXrefList.Where(x => x.ClassId == cls.myId && x.SessionId == ses.myId && x.SectionId == sec.myId).First().myId :
+                                                                        0;
 
                                                     <label class="custom-control custom-checkbox">
                                                         <input type="checkbox"
-                                                               id="@(ses.myId.ToString() + cls.myId.ToString() + sec.myId.ToString())"
+                                                               name="@(classXrefId+"-"+ses.myId.ToString()+"-" + cls.myId.ToString()+"-" + sec.myId.ToString())"
+                                                               id="@(classXrefId+"-"+ses.myId.ToString()+"-" + cls.myId.ToString()+"-" + sec.myId.ToString())"
                                                                class="custom-control-input"
-                                                               @(Model.ClassXrefList.Exists(x => x.ClassId == cls.myId && x.SessionId == ses.myId && x.SectionId == sec.myId) ? " checked" : "")
+                                                               @(classXrefId != 0 ? " checked " : "")
                                                                disabled>
                                                         <span class="custom-control-label">@sec.Name</span>
                                                     </label>
@@ -93,18 +96,7 @@
                         </div>
                         sessionDivIndex++;
                     }
-                    <div class="form-row">
-                        <div class="form-group col-md-1">
-                            <div>
-                                <input type="submit" value="Create" class="btn btn-primary" />
-                            </div>
-                        </div>
-                        <div class="form-group col-md-1">
-                            <div>
-                                @Html.ActionLink("Back", "Home", "Dashboard", null, new { @class = "btn btn-primary" })
-                            </div>
-                        </div>
-                    </div>
+
                 </div>
 
             </div>
@@ -113,6 +105,37 @@
         <!-- ============================================================== -->
         <!-- vertical tabs tabs  -->
         <!-- ============================================================== -->
+        <div class="row">
+            <div class="col-12 row">
+                <div class="col-2">
+                </div>
+                <div class="">
+                    <input id="btn-Edit-Class-Config" type="button" value="Edit" class="btn btn-primary btn-lg" />
+                    @Html.ActionLink("Back", "Home", "Dashboard", null, new { @class = "btn btn-primary btn-lg", id = "btn-back-class-config" })
 
+                    <input id="btn-submit-config-form" type="submit" value="Save" class="btn btn-primary btn-lg" />
+                    @Html.ActionLink("Cancel", "GetConfig", "Academic", null, new { @class = "btn btn-primary btn-lg", id = "btn-cancel-class-config" })
+                </div>
+            </div>
+        </div>
     }
 </div>
+@section Scripts{
+    <script>
+        $(document).ready(function () {
+            $("#btn-submit-config-form").hide();
+            $("#btn-cancel-class-config").hide();
+
+            $("#btn-Edit-Class-Config").click(function () {
+                $(this).hide();
+                $("#btn-back-class-config").hide();
+                $("#btn-submit-config-form").show();
+                $("#btn-cancel-class-config").show();
+
+                $("input[type='checkbox']").each(function () {
+                    this.removeAttribute("disabled");
+                });
+            });
+        });
+    </script>
+}
