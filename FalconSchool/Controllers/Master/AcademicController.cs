@@ -21,9 +21,40 @@ namespace FalconSchool.Controllers.Master
             throw new NotImplementedException();
         }
 
-        public ActionResult GetConfig()
+        public ActionResult GetConfig(string mode = "get", bool success = true)
         {
             var model = masterService.GetClassConfiguration();
+
+            if (mode == "get" && !success)
+            {
+                ViewBag.Action = "get";
+                ViewBag.AlertShow = true;
+                ViewBag.AlertMessage = "Invalid operation !!!";
+                ViewBag.AlertClass = "alert alert-warning alert-dismissible fade show";
+                ViewBag.Success = false;
+            }
+            else if (mode == "update" && success)
+            {
+                ViewBag.Action = "update";
+                ViewBag.Success = true;
+                ViewBag.AlertShow = true;
+                ViewBag.AlertMessage = "Successfully updated classes configuration";
+                ViewBag.AlertClass = "alert alert-success alert-dismissible fade show";
+            }
+            else if (mode == "update" && !success)
+            {
+                ViewBag.Action = "update";
+                ViewBag.Success = false;
+                ViewBag.AlertShow = true;
+                ViewBag.AlertMessage = "Error while saving configuration";
+                ViewBag.AlertClass = "alert alert-danger alert-dismissible fade show";
+                ViewBag.Message = "Error while saving configuration";
+            }
+            else
+            {
+                ViewBag.AlertShow = false;
+                ViewBag.Message = "";
+            }
 
             return View("~/Views/Master/ClassConfig.cshtml", model);
         }
@@ -32,8 +63,23 @@ namespace FalconSchool.Controllers.Master
         [HttpPost]
         public ActionResult UpdateConfig(FormCollection collection)
         {
-            masterService.UpdateClassConfig(collection.AllKeys.Skip(1).ToArray());
-            return RedirectToAction("GetConfig");
+            var str = collection.AllKeys.Skip(1).ToArray();
+
+            if (str.Where(x => x.Substring(0,1) == "0").Count() > 0)
+            {
+                if (masterService.UpdateClassConfig(collection.AllKeys.Skip(1).ToArray()))
+                {
+                    return RedirectToAction("GetConfig", new { mode = "update", success = true });
+                }
+                else
+                {
+                    return RedirectToAction("GetConfig", new { mode = "update", success = false });
+                }
+            }
+            else
+            {
+                return RedirectToAction("GetConfig", new { mode = "get", success = false });
+            }
         }
 
         [HttpPost]

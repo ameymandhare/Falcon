@@ -2,10 +2,33 @@
 @using System.Linq
 @model Falcon.Entity.Master.ClassConfiguration
 @{
+    /**/
+
     ViewBag.Title = "ClassConfig";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+
+@section Styles{
+    <style>
+    </style>
+}
 <div class="container-fluid dashboard-content ">
+    @if (ViewBag.AlertShow)
+    {
+        <div id="alert-box" class="@(ViewBag.AlertClass)" role="alert">
+            @(ViewBag.AlertMessage)
+            <a href="#" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </a>
+        </div>
+    }
+
+    <div id="msg-box" class="alert alert-danger alert-dismissible fade show hidden-me" role="alert">
+        <strong>Holy guacamole!</strong> You should check in on some of those fields below.
+        <a href="#" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </a>
+    </div>
     <!-- ============================================================== -->
     <!-- pageheader  -->
     <!-- ============================================================== -->
@@ -33,7 +56,7 @@
         <!-- ============================================================== -->
         <!-- vertical tabs  -->
         <!-- ============================================================== -->
-        <div class="col-sm-12 mb-5">
+        <div class="col-sm-12">
             <div class="tab-vertical">
                 <ul class="nav nav-tabs col-xs-4" id="myTab3" role="tablist">
                     @{
@@ -55,7 +78,7 @@
                         sessionULIndex++;
                     }
                 </ul>
-                <div class="tab-content col-sm-10" id="myTabContent3">
+                <div class="tab-content col-sm-10 p-b-0" id="myTabContent3">
                     @{
                         int sessionDivIndex = 0;
                     }
@@ -68,7 +91,7 @@
                             <div class="row">
                                 @foreach (var cls in Model.classList)
                                 {
-                                    <div class="col-xl-3 col-lg-6 col-md-6 col-sm-12 col-12">
+                                    <div class="col-12">
                                         <div class="card">
                                             <div class="card-body">
                                                 <h3 class="card-title border-bottom pb-2">@Html.Raw(cls.Name)</h3>
@@ -77,16 +100,21 @@
                                                     var classXrefId = Model.ClassXrefList.Exists(x => x.ClassId == cls.myId && x.SessionId == ses.myId && x.SectionId == sec.myId) ?
                                                                         Model.ClassXrefList.Where(x => x.ClassId == cls.myId && x.SessionId == ses.myId && x.SectionId == sec.myId).First().myId :
                                                                         0;
+                                                    <div>
+                                                        <label class="custom-control custom-checkbox">
 
-                                                    <label class="custom-control custom-checkbox">
-                                                        <input type="checkbox"
-                                                               name="@(classXrefId+"-"+ses.myId.ToString()+"-" + cls.myId.ToString()+"-" + sec.myId.ToString())"
-                                                               id="@(classXrefId+"-"+ses.myId.ToString()+"-" + cls.myId.ToString()+"-" + sec.myId.ToString())"
-                                                               class="custom-control-input"
-                                                               @(classXrefId != 0 ? " checked " : "")
-                                                               disabled>
-                                                        <span class="custom-control-label">@sec.Name</span>
-                                                    </label>
+                                                            <input type="checkbox"
+                                                                   name="@(classXrefId+"-"+ses.myId.ToString()+"-" + cls.myId.ToString()+"-" + sec.myId.ToString())"
+                                                                   id="@(classXrefId+"-"+ses.myId.ToString()+"-" + cls.myId.ToString()+"-" + sec.myId.ToString())"
+                                                                   class="custom-control-input"
+                                                                   @(classXrefId != 0 ? " checked " : "")
+                                                                   disabled>
+                                                            <span class="custom-control-label">
+                                                                @sec.Name
+                                                            </span>
+                                                        </label>
+
+                                                    </div>
                                                 }
                                             </div>
                                         </div>
@@ -94,18 +122,27 @@
                                 }
                             </div>
                         </div>
+
                         sessionDivIndex++;
                     }
-
+                    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                        <ul class="list-unstyled arrow m-b-0">
+                            <li>Please check the Class-Sec to be Active for the given Session.</li>
+                            <li>Please confirm before saving the changes.</li>
+                            <li>Existing Class-Sec cannot be unchecked.</li>
+                        </ul>
+                        <a href="#" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </a>
+                    </div>
                 </div>
 
             </div>
-
         </div>
         <!-- ============================================================== -->
         <!-- vertical tabs tabs  -->
         <!-- ============================================================== -->
-        <div class="row">
+        <div class="row p-t-20">
             <div class="col-12 row">
                 <div class="col-2">
                 </div>
@@ -122,6 +159,28 @@
 </div>
 @section Scripts{
     <script>
+
+        //function validateForm() {
+        //    let ids = [""];
+        //onclick = "return validateForm()"
+        //    // Check that any newly checked boxes are present or not
+        //    $("input[type='checkbox']").each(function () {
+        //        if ($(this).is(":checked")) {
+        //            console.log(this.getAttribute("id"));
+        //            ids.push(this.getAttribute("id").toString().slice(0, 1));
+        //        }
+        //    });
+        //    // There's at least one new record
+        //    let validOperation = ids.includes('0');
+
+        //    if (!validOperation) {
+        //        $("#msg-box").removeClass("hidden-me");
+        //        window.scrollTo(0, 0);
+        //    }
+
+        //    return validOperation;
+        //};
+
         $(document).ready(function () {
             $("#btn-submit-config-form").hide();
             $("#btn-cancel-class-config").hide();
@@ -131,11 +190,18 @@
                 $("#btn-back-class-config").hide();
                 $("#btn-submit-config-form").show();
                 $("#btn-cancel-class-config").show();
-
                 $("input[type='checkbox']").each(function () {
-                    this.removeAttribute("disabled");
+                    if ($(this).is(":not(:checked)")) {
+                        this.removeAttribute("disabled");
+                    }
                 });
             });
+
+            if ($("#alert-box").length) {
+                $("#alert-box").fadeTo(2000, 500).slideUp(700, function () {
+                    $("#alert-box").slideUp(700);
+                });
+            }
         });
     </script>
 }

@@ -3580,13 +3580,13 @@ btn-link
     color: #5969ff;
 }
 
-.tab-regular .tab-content {
-    background-color: #fff;
-    padding: 30px;
-    border: 1px solid #e6e6f2;
-    border-radius: 4px;
-    border-top-left-radius: 0px
-}
+    .tab-regular .tab-content {
+        background-color: #fff;
+        padding: 30px 30px 30px 30px;
+        border: 1px solid #e6e6f2;
+        border-radius: 4px;
+        border-top-left-radius: 0px
+    }
 
 
 /*----- Tabs Vertical CSS ----*/
@@ -3629,14 +3629,14 @@ btn-link
     border-top-right-radius: 0px !important;
 }
 
-.tab-vertical .tab-content {
-    overflow: auto;
-    -webkit-border-radius: 0px 4px 4px 4px;
-    -moz-border-radius: 0px 4px 4px 4px;
-    border-radius: 0px 4px 4px 4px;
-    background: #fff;
-    padding: 30px;
-}
+    .tab-vertical .tab-content {
+        overflow: auto;
+        -webkit-border-radius: 0px 4px 4px 4px;
+        -moz-border-radius: 0px 4px 4px 4px;
+        border-radius: 0px 4px 4px 4px;
+        background: #fff;
+        padding: 30px 30px 0px 30px;
+    }
 
 
 /*----- Tabs Outline CSS ----*/
