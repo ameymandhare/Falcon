@@ -1,0 +1,207 @@
+﻿@using System.Data
+@using System.Linq
+@model Falcon.Entity.Master.ClassConfiguration
+@{
+    /**/
+
+    ViewBag.Title = "ClassConfig";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section Styles{
+    <style>
+    </style>
+}
+<div class="container-fluid dashboard-content ">
+    @if (ViewBag.AlertShow)
+    {
+        <div id="alert-box" class="@(ViewBag.AlertClass)" role="alert">
+            @(ViewBag.AlertMessage)
+            <a href="#" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </a>
+        </div>
+    }
+
+    <div id="msg-box" class="alert alert-danger alert-dismissible fade show hidden-me" role="alert">
+        <strong>Holy guacamole!</strong> You should check in on some of those fields below.
+        <a href="#" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </a>
+    </div>
+    <!-- ============================================================== -->
+    <!-- pageheader  -->
+    <!-- ============================================================== -->
+    <div class="row">
+        <div class="col-md-12">
+            <div class="page-header">
+                <h2 class="pageheader-title">Session-Class-Section Configuration</h2>
+                <div class="page-breadcrumb">
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href=@Url.Action("Home","Dashboard",null) class="breadcrumb-link">Dashboard</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">Session-Class-Section Configuration</li>
+                        </ol>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- ============================================================== -->
+    <!-- end pageheader  -->
+    <!-- ============================================================== -->
+    @using (Html.BeginForm("UpdateConfig", "Academic", "HttpPost"))
+    {
+        @Html.AntiForgeryToken()
+        <!-- ============================================================== -->
+        <!-- vertical tabs  -->
+        <!-- ============================================================== -->
+        <div class="col-sm-12">
+            <div class="tab-vertical">
+                <ul class="nav nav-tabs col-xs-4" id="myTab3" role="tablist">
+                    @{
+                        int sessionULIndex = 0;
+                    }
+                    @foreach (var ses in Model.sessionList)
+                    {
+
+                        <li class="nav-item">
+                            <a class="@(sessionULIndex == 0 ? "nav-link h5 active" : "nav-link h5")"
+                               id=@(ses.myId + "LI")
+                               data-toggle="tab"
+                               href="@("#" + ses.myId + "div")"
+                               role="tab"
+                               aria-controls="home"
+                               aria-selected="true">@Html.Raw(ses.Name)</a>
+                        </li>
+
+                        sessionULIndex++;
+                    }
+                </ul>
+                <div class="tab-content col-sm-10 p-b-0" id="myTabContent3">
+                    @{
+                        int sessionDivIndex = 0;
+                    }
+                    @foreach (var ses in Model.sessionList)
+                    {
+                        <div class="@(sessionDivIndex == 0 ? "tab-pane fade show active" : "tab-pane fade")"
+                             id="@(ses.myId + "div")"
+                             role="tabpanel"
+                             aria-labelledby=@(ses.myId + "LI")>
+                            <div class="row">
+                                @foreach (var cls in Model.classList)
+                                {
+                                    <div class="col-12">
+                                        <div class="card">
+                                            <div class="card-body">
+                                                <h3 class="card-title border-bottom pb-2">@Html.Raw(cls.Name)</h3>
+                                                @foreach (var sec in Model.sectionList)
+                                                {
+                                                    var classXrefId = Model.ClassXrefList.Exists(x => x.ClassId == cls.myId && x.SessionId == ses.myId && x.SectionId == sec.myId) ?
+                                                                        Model.ClassXrefList.Where(x => x.ClassId == cls.myId && x.SessionId == ses.myId && x.SectionId == sec.myId).First().myId :
+                                                                        0;
+                                                    <div>
+                                                        <label class="custom-control custom-checkbox">
+
+                                                            <input type="checkbox"
+                                                                   name="@(classXrefId+"-"+ses.myId.ToString()+"-" + cls.myId.ToString()+"-" + sec.myId.ToString())"
+                                                                   id="@(classXrefId+"-"+ses.myId.ToString()+"-" + cls.myId.ToString()+"-" + sec.myId.ToString())"
+                                                                   class="custom-control-input"
+                                                                   @(classXrefId != 0 ? " checked " : "")
+                                                                   disabled>
+                                                            <span class="custom-control-label">
+                                                                @sec.Name
+                                                            </span>
+                                                        </label>
+
+                                                    </div>
+                                                }
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                            </div>
+                        </div>
+
+                        sessionDivIndex++;
+                    }
+                    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                        <ul class="list-unstyled arrow m-b-0">
+                            <li>Please check the Class-Sec to be Active for the given Session.</li>
+                            <li>Please confirm before saving the changes.</li>
+                            <li>Existing Class-Sec cannot be unchecked.</li>
+                        </ul>
+                        <a href="#" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <!-- ============================================================== -->
+        <!-- vertical tabs tabs  -->
+        <!-- ============================================================== -->
+        <div class="row p-t-20">
+            <div class="col-12 row">
+                <div class="col-2">
+                </div>
+                <div class="">
+                    <input id="btn-Edit-Class-Config" type="button" value="Edit" class="btn btn-primary btn-lg" />
+                    @Html.ActionLink("Back", "Home", "Dashboard", null, new { @class = "btn btn-primary btn-lg", id = "btn-back-class-config" })
+
+                    <input id="btn-submit-config-form" type="submit" value="Save" class="btn btn-primary btn-lg" />
+                    @Html.ActionLink("Cancel", "GetConfig", "Academic", null, new { @class = "btn btn-primary btn-lg", id = "btn-cancel-class-config" })
+                </div>
+            </div>
+        </div>
+    }
+</div>
+@section Scripts{
+    <script>
+
+        //function validateForm() {
+        //    let ids = [""];
+        //onclick = "return validateForm()"
+        //    // Check that any newly checked boxes are present or not
+        //    $("input[type='checkbox']").each(function () {
+        //        if ($(this).is(":checked")) {
+        //            console.log(this.getAttribute("id"));
+        //            ids.push(this.getAttribute("id").toString().slice(0, 1));
+        //        }
+        //    });
+        //    // There's at least one new record
+        //    let validOperation = ids.includes('0');
+
+        //    if (!validOperation) {
+        //        $("#msg-box").removeClass("hidden-me");
+        //        window.scrollTo(0, 0);
+        //    }
+
+        //    return validOperation;
+        //};
+
+        $(document).ready(function () {
+            $("#btn-submit-config-form").hide();
+            $("#btn-cancel-class-config").hide();
+
+            $("#btn-Edit-Class-Config").click(function () {
+                $(this).hide();
+                $("#btn-back-class-config").hide();
+                $("#btn-submit-config-form").show();
+                $("#btn-cancel-class-config").show();
+                $("input[type='checkbox']").each(function () {
+                    if ($(this).is(":not(:checked)")) {
+                        this.removeAttribute("disabled");
+                    }
+                });
+            });
+
+            if ($("#alert-box").length) {
+                $("#alert-box").fadeTo(2000, 500).slideUp(700, function () {
+                    $("#alert-box").slideUp(700);
+                });
+            }
+        });
+    </script>
+}

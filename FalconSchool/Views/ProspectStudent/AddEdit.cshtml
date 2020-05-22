@@ -1,0 +1,307 @@
+﻿@model Falcon.Entity.Prospect.AddProspectStudentModel
+
+@{
+    ViewBag.Title = "Add";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+}
+@section Styles{
+    <link href="~/Content/libs/css/CustomDatePicker.css" rel="stylesheet" />
+    <link rel="stylesheet" href="~/Content/vendor/datepicker/tempusdominus-bootstrap-4.css" />
+
+    <link href="~/Content/vendor/jquery/jquery-ui.css" rel="stylesheet" />
+    <style>
+        .ui-autocomplete-loading {
+            background: white url("../../Content/images/ui-anim_basic_16x16.gif") right center no-repeat;
+        }
+    </style>
+}
+<!-- ============================================================== -->
+<!-- wrapper  -->
+<!-- ============================================================== -->
+
+<div class="container-fluid dashboard-content ">
+    <!-- ============================================================== -->
+    <!-- pageheader  -->
+    <!-- ============================================================== -->
+    <div class="row">
+        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+            <div class="page-header">
+                <h2 class="pageheader-title">Add Prospect Student</h2>
+                <div class="page-breadcrumb">
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item">@Html.ActionLink("Prospect Student List", "List")</li>
+                            <li class="breadcrumb-item active" aria-current="page">Add Prospect Student</li>
+                        </ol>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- ============================================================== -->
+    <!-- end pageheader  -->
+    <!-- ============================================================== -->
+    <!-- ============================================================== -->
+    <!-- Form Begin Create Prospect Student -->
+    <!-- ============================================================== -->
+    @using (Html.BeginForm("Create", "ProspectStudent", "HttpPost"))
+    {
+        <!-- Generate antiforge token to submit post form -->
+        @Html.AntiForgeryToken()
+
+        <!-- Form structure begin -->
+        <div class="form-horizontal">
+            <!-- All error messages and validation  messages will show here -->
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <!-- Row 1 begin : First name, middle name, last name, class selection and gender selection controls -->
+            <div class="form-row">
+                <div class="form-group col-md-2">
+                    @Html.LabelFor(model => model.FirstName)
+                    <div>
+                        @Html.EditorFor(model => model.FirstName, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.FirstName, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group col-md-2">
+                    @Html.LabelFor(model => model.MiddleName)
+                    <div>
+                        @Html.EditorFor(model => model.MiddleName, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.MiddleName, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group col-md-2">
+                    @Html.LabelFor(model => model.LastName)
+                    <div>
+                        @Html.EditorFor(model => model.LastName, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.LastName, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group col-md-1">
+                    @Html.LabelFor(model => model.ClassId)
+                    <div>
+                        @Html.DropDownList("ClassList", new SelectList(ViewBag.ClassMaster, "Text", "Value"), new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.ClassId, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group col-md-1">
+                    @Html.Label("Gender")
+                    <div>
+                        @Html.DropDownList("Gender", new SelectList(ViewBag.GenderMaster, "Text", "Value"), new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.GenderId, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+            <!-- Row 1 end -->
+            <!-- Row 2 begin : DoB date picker, phone number, adhar card number, email -->
+            <div class="form-row">
+                <div class="form-group col-md-2">
+                    @Html.Label("DoB")
+                    <div class="input-group date" id="datetimepicker4" data-target-input="nearest">
+                        @Html.TextBoxFor(model => model.DoB, new { htmlAttributes = new { @class = "form-control datetimepicker-input", autocomplete = "off", data_target = "#datetimepicker4" } })
+                        <div class="input-group-append" data-target="#datetimepicker4" data-toggle="datetimepicker">
+                            <div class="input-group-text"><i class="far fa-calendar-alt"></i></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group col-md-2">
+                    @Html.LabelFor(model => model.Phone)
+                    <div>
+                        @Html.EditorFor(model => model.Phone, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Phone, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group col-md-2">
+                    @Html.LabelFor(model => model.AadharId)
+                    <div>
+                        @Html.EditorFor(model => model.AadharId, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.AadharId, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group col-md-2">
+                    @Html.LabelFor(model => model.Email)
+                    <div>
+                        @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+            <!-- Row 2 end -->
+            <!-- Row 3 begin : Current address and permanent address-->
+            <div class="form-row">
+                @*<div class="form-group col-md-4">
+                        @Html.Label("Current Address")
+                        <div>
+                            @Html.TextAreaFor(model => model.CurrentAddress, 5, 1, htmlAttributes: new { style = "width: 100%; max-width: 100%;" })
+                            @Html.ValidationMessageFor(model => model.CurrentAddress, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group col-md-4">
+                        @Html.Label("Permanent Address")
+                        <div>
+                            @Html.TextAreaFor(model => model.PeremenantAddress, 5, 1, htmlAttributes: new { style = "width: 100%; max-width: 100%;" })
+                            @Html.ValidationMessageFor(model => model.PeremenantAddress, "", new { @class = "text-danger" })
+                        </div>
+                    </div>*@
+                @{
+                    Html.RenderPartial("_Address");
+                }
+            </div>
+            <!-- Row 3 end -->
+            <!-- Row 4 begin :  religion selection, caste selection, category selection and bloodgroup seelection control -->
+            <div class="form-row">
+                <div class="form-group col-md-2">
+                    @Html.Label("Religion")
+                    <div>
+                        @Html.DropDownList("Religion", new SelectList(ViewBag.ReligionMaster, "Text", "Value"), new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.ReligionId, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group col-md-2">
+                    @Html.Label("Caste")
+                    <div>
+                        @Html.DropDownList("Caste", new SelectList(ViewBag.CasteMaster, "Text", "Value"), new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.CasteId, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group col-md-2">
+                    @Html.Label("Category", htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div>
+                        @Html.DropDownList("Category", new SelectList(ViewBag.CategoryMaster, "Text", "Value"), new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.CategoryId, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group col-md-2">
+                    @Html.Label("Blood Group")
+                    <div>
+                        @Html.DropDownList("BloodGroup", new SelectList(ViewBag.BloodGrpMaster, "Text", "Value"), new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.BloodGrpId, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+            <!-- Row 4 end -->
+            <!-- Row 5 begin :  parent name, parent phone, parent email controls -->
+            <div class="form-row">
+                <div class="form-group col-md-3">
+                    @Html.Label("Parent Name")
+                    <div>
+                        @Html.EditorFor(model => model.ParentName, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.ParentName, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group col-md-2">
+                    @Html.Label("Parent Phone")
+                    <div>
+                        @Html.EditorFor(model => model.ParentPhone, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.ParentPhone, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group col-md-3">
+                    @Html.Label("Parent Email")
+                    <div>
+                        @Html.EditorFor(model => model.ParentEmailId, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.ParentEmailId, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+            <!-- Row 5 end -->
+            <!-- Row 6 begin :  parent relationship, parent occupation controls -->
+            <div class="form-row">
+                <div class="form-group col-md-2">
+                    @Html.Label("Parent Relationship")
+                    <div>
+                        @Html.EditorFor(model => model.ParentRelationship, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.ParentRelationship, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group col-md-2">
+                    @Html.Label("Parent Occupation")
+                    <div>
+                        @Html.EditorFor(model => model.ParentOccupation, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.ParentOccupation, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+            <!-- Row 6 end -->
+            <!-- Row 7 begin :  notes controls  -->
+            <div class="form-row">
+                <div class="form-group col-md-3">
+                    @Html.Label("Notes(if any)")
+                    <div>
+                        @Html.TextAreaFor(model => model.Notes, 5, 1, htmlAttributes: new { style = "width: 100%; max-width: 100%;" })
+                        @Html.ValidationMessageFor(model => model.PeremenantAddress, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+            <!-- Row 7 end -->
+            <!-- Row 8 begin :  create and back button  -->
+            <div class="form-row">
+                <div class="form-group col-md-1">
+                    <div>
+                        <input type="submit" value="Create" class="btn btn-primary" />
+                    </div>
+                </div>
+                <div class="form-group col-md-1">
+                    <div>
+                        @Html.ActionLink("Back to List", "List", null, new { @class = "btn btn-primary" })
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <!-- Form structure end -->
+    }
+
+    <!-- ============================================================== -->
+    <!-- Form End Create Prospect Student -->
+    <!-- ============================================================== -->
+
+
+</div>
+
+<!-- ============================================================== -->
+<!-- end wrapper  -->
+<!-- ============================================================== -->
+@section Scripts{
+    <script src="~/Content/vendor/datepicker/moment.js"></script>
+    <script src="~/Content/vendor/datepicker/tempusdominus-bootstrap-4.js"></script>
+    <script src="~/Content/vendor/datepicker/datepicker.js"></script>
+
+    <script src="~/Content/vendor/jquery/jquery-1.12.4.js"></script>
+    <script src="~/Content/vendor/jquery/jquery-ui-1.12.1.js"></script>
+    @*<script src="~/Content/libs/js/postal-code.js"></script>*@
+    <script>
+        $(document).ready(function () {
+            function log(message) {
+                $("<div>").text(message).prependTo("#log");
+                $("#log").scrollTop(0);
+            }
+
+            $("#birds").autocomplete({
+                source: function (request, response) {
+                    $.ajax({
+                        url: '@(Url.Action("SearchPostal", "Common"))',
+                        dataType: "text",
+                        data: {
+                            postalCode: $("#birds").val()
+                        },
+                        success: function (data) {
+
+                            console.log(data);
+                            response(data);
+                        }
+                    });
+                },
+                minLength: 6,
+                select: function (event, ui) {
+                    log("Selected: " + ui.item.value + " aka " + ui.item.id);
+                }
+            });
+        });
+    </script>
+}

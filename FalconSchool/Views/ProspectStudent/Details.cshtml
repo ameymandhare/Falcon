@@ -1,0 +1,189 @@
+﻿@model Falcon.Entity.Prospect.ViewProspectStudentModel
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!-- ============================================================== -->
+<!-- wrapper  -->
+<!-- ============================================================== -->
+
+<div class="container-fluid dashboard-content ">
+    <!-- ============================================================== -->
+    <!-- pageheader  -->
+    <!-- ============================================================== -->
+    <div class="row">
+        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+            <div class="page-header">
+                <h2 class="pageheader-title">Prospect Student Details</h2>
+                <div class="page-breadcrumb">
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item">@Html.ActionLink("Prospect Student List", "List")</li>
+                            <li class="breadcrumb-item active" aria-current="page">Prospect Student Details</li>
+                        </ol>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- ============================================================== -->
+    <!-- end pageheader  -->
+    <!-- ============================================================== -->
+    <form>
+        <div class="form-row">
+            <div class="form-group col-md-2">
+                <label for="inputEmail4">Application Number</label>
+                <input type="text" class="form-control" placeholder="@Html.DisplayFor(model => model.ApplicationNumber)" disabled>
+            </div>
+            <div class="form-group col-md-2">
+                <label for="inputPassword4">Application Date</label>
+                <input type="text" class="form-control" placeholder="@Html.DisplayFor(model => model.ApplicationDate)" disabled />
+            </div>
+            <div class="form-group col-md-2">
+                <label for="inputPassword4">First Name</label>
+                <input type="text" class="form-control" placeholder="@Html.DisplayFor(model => model.FirstName)" disabled>
+            </div>
+            <div class="form-group col-md-2">
+                <label for="inputPassword4">Middle Name</label>
+                <input type="text" class="form-control" placeholder="@Html.DisplayFor(model => model.MiddleName)" disabled>
+            </div>
+            <div class="form-group col-md-2">
+                <label for="inputPassword4">Last Name</label>
+                <input type="text" class="form-control" placeholder="@Html.DisplayFor(model => model.LastName)" disabled>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-2">
+                <label for="inputEmail4">Admission Status</label>
+                <input type="text" class="form-control" placeholder="@Html.DisplayFor(model => model.AdmissionStatus)" disabled>
+            </div>
+            <div class="form-group col-md-2">
+                <label for="inputPassword4">Class Applied</label>
+                <input type="text" class="form-control" placeholder="@Html.DisplayFor(model => model.ClassName)" disabled>
+            </div>
+            <div class="form-group col-md-2">
+                <label for="inputPassword4">DOB</label>
+                <input type="text" class="form-control" placeholder="@Html.DisplayFor(model => model.DoB)" disabled />
+            </div>
+            <div class="form-group col-md-2">
+                <label for="inputPassword4">Gender</label>
+                <input type="text" class="form-control" placeholder="@Html.DisplayFor(model => model.Gender)" disabled>
+            </div>
+            <div class="form-group col-md-2">
+                <label for="inputPassword4">Bloodgroup</label>
+                <input type="text" class="form-control" placeholder="@Html.DisplayFor(model => model.BloodGrp)" disabled>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-5">
+                <div class="form-row">
+                    <label for="inputAddress">Current Address</label>
+                    <textarea type="text" class="form-control" placeholder="@Html.DisplayFor(model => model.CurrentAddress)" disabled></textarea>
+                </div>
+                <div class="form-row pt-2">
+                    <div class="form-group col-md-5">
+                        <label for="inputCity">City</label>
+                        <input type="text" class="form-control" placeholder="City" disabled>
+                    </div>
+                    <div class="form-group col-md-5">
+                        <label for="inputState">State</label>
+                        <input type="text" class="form-control" placeholder="State" disabled>
+                    </div>
+                    <div class="form-group col-md-2">
+                        <label for="inputZip">Pin Code</label>
+                        <input type="text" class="form-control" disabled>
+                    </div>
+                </div>
+            </div>
+            @*border border-info rounded*@
+            <div class="form-group  col-md-5">
+                <div class="form-row">
+                    <label for="inputAddress">Permanent Address</label>
+                    <textarea type="text" class="form-control" placeholder="@Html.DisplayFor(model => model.PeremenantAddress)" disabled></textarea>
+                </div>
+                <div class="form-row pt-2">
+                    <div class="form-group col-md-5">
+                        <label for="inputCity">City</label>
+                        <input type="text" class="form-control" placeholder="City" disabled>
+                    </div>
+                    <div class="form-group col-md-5">
+                        <label for="inputState">State</label>
+                        <input type="text" class="form-control" placeholder="State" disabled>
+                    </div>
+                    <div class="form-group col-md-2">
+                        <label for="inputZip">Pin Code</label>
+                        <input type="text" class="form-control" disabled>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-2">
+                <label for="inputEmail4">Aadhar Card</label>
+                <input type="text" class="form-control" placeholder="@Html.DisplayFor(model => model.AadharId)" disabled>
+            </div>
+            <div class="form-group col-md-3">
+                <label for="inputPassword4">Phone</label>
+                <input type="text" class="form-control" placeholder="@Html.DisplayFor(model => model.Phone)" disabled>
+            </div>
+            <div class="form-group col-md-4">
+                <label for="inputPassword4">Email</label>
+                <input type="text" class="form-control" placeholder="@Html.DisplayFor(model => model.Email)" disabled />
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-2">
+                <label for="inputEmail4">Religion</label>
+                <input type="text" class="form-control" placeholder="@Html.DisplayFor(model => model.Religion)" disabled>
+            </div>
+            <div class="form-group col-md-2">
+                "
+                <label for="inputPassword4">Cast</label>
+                <input type="text" class="form-control" placeholder="@Html.DisplayFor(model => model.Caste)" disabled>
+            </div>
+            <div class="form-group col-md-2">
+                <label for="inputPassword4">Category</label>
+                <input type="text" class="form-control" placeholder="@Html.DisplayFor(model => model.Category)" disabled />
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-2">
+                <label for="inputEmail4">Parent Name</label>
+                <input type="text" class="form-control" placeholder="@Html.DisplayFor(model => model.ParentName)" disabled>
+            </div>
+            <div class="form-group col-md-2">
+                <label for="inputPassword4">Parent Phone</label>
+                <input type="text" class="form-control" placeholder="@Html.DisplayFor(model => model.ParentPhone)" disabled>
+            </div>
+            <div class="form-group col-md-2">
+                <label for="inputPassword4">Parent Email</label>
+                <input type="text" class="form-control" placeholder="@Html.DisplayFor(model => model.ParentEmailId)" disabled />
+            </div>
+            <div class="form-group col-md-2">
+                <label for="inputPassword4">Parent Occupation</label>
+                <input type="text" class="form-control" placeholder="@Html.DisplayFor(model => model.ParentOccupation)" disabled>
+            </div>
+            <div class="form-group col-md-2">
+                <label for="inputPassword4">RelationShip</label>
+                <input type="text" class="form-control" placeholder="@Html.DisplayFor(model => model.ParentRelationship)" disabled>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-4">
+                <label for="inputAddress">Note</label>
+                <textarea type="text" class="form-control" placeholder="@Html.DisplayFor(model => model.Notes)" disabled></textarea>
+            </div>
+        </div>
+    </form>
+    <p>
+        @Html.ActionLink("Edit", "Edit", null, new { id = Model.Id }, new { @class = "btn btn-primary" })
+        @Html.ActionLink("Delete", "Delete", null, new { id = Model.Id }, new { @class = "btn btn-primary" })
+        @Html.ActionLink("Back", "List", null, new { @class = "btn btn-primary" })
+    </p>
+</div>
+
+<!-- ============================================================== -->
+<!-- end wrapper  -->
+<!-- ============================================================== -->
